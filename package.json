@@ -1,0 +1,33 @@
+{
+  "name": "autodebugger",
+  "version": "0.1.0",
+  "description": "autodebugger",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && ava",
+    "example": "tsc && node example/"
+  },
+  "keywords": [
+    "babel",
+    "plugin",
+    "debug",
+    "development"
+  ],
+  "repository": {
+    "url": "git@github.com:erukiti/babel-plugin-autodebugger.git"
+  },
+  "author": "SASAKI Shunsuke <erukiti+npm@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^8.0.45",
+    "ava": "^0.22.0",
+    "babel-core": "^7.0.0-beta.3",
+    "babel-register": "^6.26.0",
+    "prettier": "^1.7.4",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "babel-plugin-autodebugger": "file:///Users/erukiti/work/babel-plugin-autodebugger"
+  }
+}
