@@ -1,4 +1,7 @@
 import * as path from 'path'
+import * as fs from 'fs'
+
+import * as st from 'stacktrace-js'
 
 const autodebuggerPath = path.join(__dirname, '..', '..', 'dist/')
 const defaultOpts = {
@@ -29,6 +32,8 @@ export class Autodebugger {
             this.isPrintTrace = true
         }
 
+        require('source-map-support').install({hookRequire: true})
+
         require('babel-register')({
             plugins: [['autodebugger', opts]],
             ignore: ['dist/', 'node_modules/'],
@@ -44,7 +49,12 @@ export class Autodebugger {
         switch (type_) {
             case 'trace': {
                 if (this.isPrintTrace) {
-                    console.log(`\x1b[35m${path.relative(process.cwd(), filename)}:${name}:${line}:${column}: ${typeInfo[0]} ${args}\x1b[m`)
+                    console.log(
+                        `\x1b[35m${path.relative(
+                            process.cwd(),
+                            filename,
+                        )}:${name}:${line}:${column}: ${typeInfo[0]} ${args}\x1b[m`,
+                    )
                 } else {
                     this._trace.push(obj)
                 }
@@ -67,11 +77,11 @@ export class Autodebugger {
                 return
             }
         }
-    
+
         const argsPrintable = args.map(arg => {
             if (arg[Symbol.toPrimitive]) {
                 return arg[Symbol.toPrimitive]('string')
-            } else if (typeof arg === 'object'){
+            } else if (typeof arg === 'object') {
                 if (Array.isArray(arg)) {
                     return arg.map(v => argsPrintable(v))
                 } else if (arg && arg.constructor.name === 'Object') {
@@ -80,7 +90,12 @@ export class Autodebugger {
             }
             return arg
         })
-        console.log(`${col}${path.relative(process.cwd(), filename)}:${line}:${column}: ${argsPrintable}\x1b[m`)
+        console.log(
+            `${col}${path.relative(
+                process.cwd(),
+                filename,
+            )}:${line}:${column}: ${argsPrintable}\x1b[m`,
+        )
     }
 
     trap(e) {
@@ -92,5 +107,25 @@ export class Autodebugger {
         }
 
         console.log(e.stack)
+
+        try {
+            fs.mkdirSync('.autodebugger')
+        } catch (e) {
+            // nice catch
+        }
+
+        st.fromError(e).then(stackframes => {
+            const data = {
+                trace: this._trace,
+                stack: stackframes,
+            }
+
+            try {
+                const filename = path.join('.autodebugger', `error-${Date.now()}.json`)
+                fs.writeFileSync(filename, JSON.stringify(data, null, '  '))
+            } catch (e) {
+                console.error('autodebugger: debug file output error', e)
+            }
+        })
     }
 }

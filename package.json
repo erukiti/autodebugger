@@ -28,6 +28,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "babel-plugin-autodebugger": "^0.1.1"
+    "babel-plugin-autodebugger": "^0.1.1",
+    "stacktrace-js": "^2.0.0"
   }
 }

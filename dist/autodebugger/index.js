@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
+const fs = require("fs");
+const st = require("stacktrace-js");
 const autodebuggerPath = path.join(__dirname, '..', '..', 'dist/');
 const defaultOpts = {
     replaceProgram: `
@@ -26,6 +28,7 @@ class Autodebugger {
         if (config.printTrace) {
             this.isPrintTrace = true;
         }
+        require('source-map-support').install({ hookRequire: true });
         require('babel-register')({
             plugins: [['autodebugger', opts]],
             ignore: ['dist/', 'node_modules/'],
@@ -86,6 +89,25 @@ class Autodebugger {
             console.log('');
         }
         console.log(e.stack);
+        try {
+            fs.mkdirSync('.autodebugger');
+        }
+        catch (e) {
+            // nice catch
+        }
+        st.fromError(e).then(stackframes => {
+            const data = {
+                trace: this._trace,
+                stack: stackframes,
+            };
+            try {
+                const filename = path.join('.autodebugger', `error-${Date.now()}.json`);
+                fs.writeFileSync(filename, JSON.stringify(data, null, '  '));
+            }
+            catch (e) {
+                console.error('autodebugger: debug file output error', e);
+            }
+        });
     }
 }
 exports.Autodebugger = Autodebugger;
