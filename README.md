@@ -1,5 +1,11 @@
 # autodebugger
 
+## How to use
+
+```sh
+$ npm install autodebugger -D
+```
+
 ## example
 
 ### hoge.js

@@ -62,7 +62,21 @@ class Autodebugger {
                 return;
             }
         }
-        console.log(`${col}${path.relative(process.cwd(), filename)}:${line}:${column}: ${args}\x1b[m`);
+        const argsPrintable = args.map(arg => {
+            if (arg[Symbol.toPrimitive]) {
+                return arg[Symbol.toPrimitive]('string');
+            }
+            else if (typeof arg === 'object') {
+                if (Array.isArray(arg)) {
+                    return arg.map(v => argsPrintable(v));
+                }
+                else if (arg && arg.constructor.name === 'Object') {
+                    return JSON.stringify(arg);
+                }
+            }
+            return arg;
+        });
+        console.log(`${col}${path.relative(process.cwd(), filename)}:${line}:${column}: ${argsPrintable}\x1b[m`);
     }
     trap(e) {
         if (this._trace.length > 0) {
