@@ -8,6 +8,12 @@ $ npm install autodebugger -D
 
 ## example
 
+![](example-1.png)
+
+-----
+
+![](example-2.png)
+
 ### hoge.js
 
 ```js
