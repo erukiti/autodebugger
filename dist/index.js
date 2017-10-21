@@ -1,7 +1,14 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./debug-log"));
+const autodebugger_1 = require("./autodebugger");
+let autodebugger = null;
+exports.install = (config) => {
+    autodebugger = new autodebugger_1.Autodebugger(config);
+};
+exports.trace = (...args) => {
+    autodebugger.trace(...args);
+};
+exports.trap = (...args) => {
+    autodebugger.trap(...args);
+};
 //# sourceMappingURL=index.js.map

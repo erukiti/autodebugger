@@ -1,6 +1,6 @@
 {
   "name": "autodebugger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "autodebugger",
   "main": "dist/index.js",
   "scripts": {
@@ -28,6 +28,6 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "babel-plugin-autodebugger": "file:///Users/erukiti/work/babel-plugin-autodebugger"
+    "babel-plugin-autodebugger": "^0.1.1"
   }
 }
