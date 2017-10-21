@@ -6,9 +6,12 @@ exports.install = (config) => {
     autodebugger = new autodebugger_1.Autodebugger(config);
 };
 exports.trace = (...args) => {
-    autodebugger.trace(...args);
+    return autodebugger.trace(...args);
 };
 exports.trap = (...args) => {
-    autodebugger.trap(...args);
+    return autodebugger.trap(...args);
+};
+exports.invoke = (...args) => {
+    return autodebugger.invoke(...args);
 };
 //# sourceMappingURL=index.js.map
