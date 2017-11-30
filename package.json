@@ -1,6 +1,6 @@
 {
   "name": "autodebugger",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "autodebugger",
   "main": "dist/index.js",
   "scripts": {
@@ -15,22 +15,26 @@
     "development"
   ],
   "repository": {
-    "url": "git@github.com:erukiti/babel-plugin-autodebugger.git"
+    "url": "https://github.com/erukiti/autodebugger.git"
   },
-  "author": "SASAKI Shunsuke <erukiti+npm@gmail.com>",
-  "license": "Apache-2.0",
+  "author": "SASAKI Shunsuke - erukiti <erukiti+npm@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^8.0.45",
+    "@types/yargs": "^8.0.2",
     "ava": "^0.22.0",
-    "babel-core": "^7.0.0-beta.3",
-    "babel-register": "^6.26.0",
     "prettier": "^1.7.4",
+    "ts-node": "^3.3.0",
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "babel-plugin-autodebugger": "^0.2.0",
-    "babel-register": "^6.26.0",
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/plugin-syntax-typescript": "^7.0.0-beta.32",
+    "@babel/plugin-transform-typescript": "^7.0.0-beta.32",
+    "meta-programming-utils": "^0.1.0",
+    "pirates": "^3.0.2",
     "source-map-support": "^0.5.0",
-    "stacktrace-js": "^2.0.0"
+    "stacktrace-js": "^2.0.0",
+    "yargs": "^10.0.3"
   }
 }
